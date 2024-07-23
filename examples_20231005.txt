@@ -1,0 +1,59 @@
+ ./list-ids_1.sh | ./extractJsonValues.js 'Identities.\d+.IdentityId'
+us-east-1:1a84e56c-162b-4586-ad1d-333333333333
+us-east-1:6e858dcc-def6-45d3-a5ef-444444444444
+us-east-1:93861575-8c69-4f64-95cc-555555555555
+us-east-1:9af372f6-52c1-4840-a5fe-666666666666
+
+
+./awsListNextToken.js 'AWS_PROFILE=cb-stage aws cognito-identity list-identities --identity-pool-id us-east-1:626ae9ab-3e0d-4643-812f-dcedececeede --max-results 35 ' |  ./extractJsonValues.js 'Identities.\d+.IdentityId'
+
+
+./awsListNextToken.js 'AWS_PROFILE=cb-stage aws cognito-identity list-identities --identity-pool-id us-east-1:626ae9ab-3e0d-4643-812f-dcedececeede --max-results 35 ' |  ./extractJsonValues.js 'Identities.\d+.IdentityId' | xargs -I {ID} ./lookup-dev-ids.sh {ID}
+{
+    "IdentityId": "us-east-1:1a84e56c-162b-4586-ad1d-3333333333333",
+    "DeveloperUserIdentifierList": [
+        "mgr_stage-cbtesting"
+    ]
+}
+{
+    "IdentityId": "us-east-1:6e858dcc-def6-45d3-a5ef-4444444444444",
+    "DeveloperUserIdentifierList": [
+        "mgr_playerdev-autoclient"
+    ]
+}
+{
+    "IdentityId": "us-east-1:93861575-8c69-4f64-95cc-555555555555",
+    "DeveloperUserIdentifierList": [
+        "mgr_demo-fdrenning"
+    ]
+}
+{
+    "IdentityId": "us-east-1:9af372f6-52c1-4c40-a5fe-5656565656566",
+    "DeveloperUserIdentifierList": [
+        "mgr_staging-somecompany"
+    ]
+}
+{
+    "IdentityId": "us-east-1:a8779a61-2258-4c74-8864-676767676767",
+    "DeveloperUserIdentifierList": [
+        "mgr_staging-another_client"
+    ]
+}
+{
+    "IdentityId": "us-east-1:d94d4a62-64eb-4cf8-850d-6666666666",
+    "DeveloperUserIdentifierList": [
+        "mgr_staging-lastclient"
+    ]
+}
+{
+    "IdentityId": "us-east-1:d98bb2c1-cac4-4c7f-b721-45645645645",
+    "DeveloperUserIdentifierList": [
+        "mgr_dev-hkatz"
+    ]
+}
+{
+    "IdentityId": "us-east-1:dc55c85c-70ee-4cf8-a4c6-99999999999",
+    "DeveloperUserIdentifierList": [
+        "mgr_demonstration-mistere"
+    ]
+}
