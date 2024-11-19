@@ -57,3 +57,18 @@ us-east-1:9af372f6-52c1-4840-a5fe-666666666666
         "mgr_demonstration-mistere"
     ]
 }
+
+### Use sed instead of ./extractJsonValues.js, sed works better for large streams
+#
+#
+## create the file of IdentityIds we want to use:
+#
+./awsListNextToken.js 'AWS_PROFILE=cb-stage aws cognito-identity list-identities --identity-pool-id us-east-1:626ae9ab-3e0d-4643-812f-dcedececeede --max-results 60 ' > id-list.txt
+
+## process the id-list.txt, run 10 processes at a time wtih xargs
+#
+cat id-list.txt | grep IdentityId | sed -e 's/            "IdentityId": "//g' | sed -e 's/",$//g' | xargs -P 10 -I {ID} ./lookup-dev-ids.sh {ID} | tee list_id_and_dev_id_list.txt
+
+## (optional) Watch the progress of the file. Run this in another terminal
+#
+watch grep -c IdentityId list_id_and_dev_id_list.txt
